@@ -1,0 +1,8 @@
+POST http://localhost:3000/reviews
+Authorization: Bearer YOUR_ACCESS_TOKEN
+Content-Type: application/json
+{
+    
+  "comment": "test",
+  "rating": 5
+}

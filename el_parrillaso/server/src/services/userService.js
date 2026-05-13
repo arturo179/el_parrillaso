@@ -25,6 +25,3 @@ app.post("/signup", async (req, res) => {
     return res.json({ message: "User registered successfully", data });
 });
 
-app.listen(process.env.PORT, () => 
-    console.log(`Server is running on port ${process.env.PORT}`)
-);

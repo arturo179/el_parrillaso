@@ -1,13 +1,13 @@
 import express from "express";
-import dotenv from "dotenv";
 import multer from "multer"
 import cors from "cors";
 import fs from "fs";
 import reviewRoutes from "./routes/reviewRoutes.js"
 import path from "path"
-
+import dotenv from "dotenv";
 import {createClient} from "@supabase/supabase-js";
 
+dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 app.use(cors())
