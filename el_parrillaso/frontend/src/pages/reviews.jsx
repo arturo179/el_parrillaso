@@ -54,7 +54,7 @@ function Reviews() {
             }
             
             if(uploadedUrl) formData.append("image_url", uploadedUrl);
-            const res = await fetch("http://localhost:3000/reviews", {
+            const res = await fetch(`${API_URL}/reviews`, {
                 method: "POST",
                 headers:{
                     Authorization: `Bearer ${session.access_token}`,
