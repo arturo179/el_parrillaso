@@ -1,18 +1,21 @@
 import { useEffect,useState } from "react";
 import { supabase } from "../services/supabaseClient"
 
+
 function Reviews() {
     const [reviewText, setReviewText] = useState("");
     const [rating, setRating] = useState(0);
     const [image, setImage] = useState(null);
     const[preview, setPreview] = useState(null);
     const [reviews, setReviews] = useState([]);
+    const[imageUrl, setImageUrl] = useState("");
     
 
     useEffect(() => {
         const fetchReviews = async() => {
             try {
-                const res = await fetch("http://localhost:3000/reviews");
+                const API_URL = import.meta.env.VITE_API_URL;
+                const res = await fetch(`${API_URL}/reviews`);
                 const data = await res.json();
                 setReviews(data);
 
@@ -33,7 +36,10 @@ function Reviews() {
         try {
             const {data: { session} } = await supabase.auth.getSession();
 
-
+            let uploadedUrl = null;
+            if(image){
+                uploadedUrl = await uploadImage();
+            }
 
             const formData = new FormData();
             formData.append("comment",reviewText);
@@ -42,9 +48,12 @@ function Reviews() {
                 formData.append("image",image);
                 console.log(formData.get("image"));
             }
+
             else {
                 console.log("no image");
             }
+            
+            if(uploadedUrl) formData.append("image_url", uploadedUrl);
             const res = await fetch("http://localhost:3000/reviews", {
                 method: "POST",
                 headers:{
@@ -74,7 +83,35 @@ function Reviews() {
             setImage(file);
             setPreview(URL.createObjectURL(file))
         }
+
     };
+
+    const uploadImage = async () => {
+    const fileName = `${Date.now()}-${image.name}`;
+    try {
+        const { data: imageData, error: uploadError } = await supabase.storage
+            .from("uploads")
+            .upload(fileName, image);
+
+        if (uploadError) {
+            console.log("Supabase error", uploadError);
+            return null;
+        }
+
+        if (imageData) {
+            const { data: publicUrlData } = supabase.storage
+                .from("uploads")
+                .getPublicUrl(fileName);  
+            if (publicUrlData?.publicUrl) {
+                setImageUrl(publicUrlData.publicUrl);
+                return publicUrlData.publicUrl;
+            }
+        }
+    } catch (error) {
+        console.log("caught an error", error);
+    }
+    return null;
+};
 
 
 
@@ -137,9 +174,7 @@ function Reviews() {
 
                     {(r.image_url || r.image_URL) && (
                         <img
-                            src= {r.image_url && (
-                                <img src={r.image_url} alt="Review" className="review-image" />
-                            )}
+                            src= {r.image_url || r.image_URL}
                             alt="Review"
                             className="review-image"
                         />

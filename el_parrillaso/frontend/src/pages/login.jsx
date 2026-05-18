@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 function Login() {
   const { signIn } = useAuth();
   const navigate = useNavigate();
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -21,6 +20,9 @@ function Login() {
       navigate("/");
     }
   };
+
+
+  
 
   return (
     <div className="auth-container">

@@ -8,8 +8,8 @@ import { Carousel } from "react-responsive-carousel";
 function Home(){
     return (<div className="home">
     <section className="hero">
-        <h1> Authentic Mexican Flavor</h1>
-            <h1>Fresh. Grilled. Delicious</h1>
+        <h1> Authentic Mexican Flavor" </h1>
+            <h1> Fresh. Grilled. Delicious</h1>
        <a href ="/reviews"> <button> Leave a Review</button></a>
     </section>
 
