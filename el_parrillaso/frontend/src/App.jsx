@@ -1,4 +1,8 @@
 import "./App.css";
+import "./styles/home.css"
+import "./styles/about.css"
+import "./styles/signup.css"
+import "./styles/contact.css"
 import { BrowserRouter as Router, Routes, Route} from "react-router-dom"
 
 import Navbar  from "./components/Navbar";

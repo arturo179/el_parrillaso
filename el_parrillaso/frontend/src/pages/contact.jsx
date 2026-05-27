@@ -1,52 +1,107 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-
-
 function Contact() {
-    const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
-    const [message, setMessage] = useState("");
+    const [formData, setFormData] = useState({
+        name: "",
+        email: "",
+        message: "",
+    });
 
+    const [submitted, setSubmitted] = useState(false);
     const navigate = useNavigate();
 
-    return (
+    const handleChange = (e) => {
+        const { name, value } = e.target;
 
-    <div className="contact-page">
-        <h2>Contact Us</h2>
-        <form onSubmit={(e) => {
-            e.preventDefault();
-            // Handle form submission logic here
-            console.log("Name:", name);
-            console.log("Email:", email);
-            console.log("Message:", message);
-            setName("");
-            setEmail("");
-            setMessage("");
-        }}>
-            <input
-                type="text"
-                placeholder="Your Name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                required
-            />
-            <input
-                type="email"
-                placeholder="Your Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-            />
-            <textarea
-                placeholder="Your Message"
-                value={message}
-                onChange={(e) => setMessage(e.target.value)}
-                required
-            />
-            <button type="submit">Send Message</button>
-        </form>
-    </div>  
+        setFormData((prevData) => ({
+            ...prevData,
+            [name]: value,
+        }));
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        console.log("Contact Form:", formData);
+
+        setSubmitted(true);
+
+        setFormData({
+            name: "",
+            email: "",
+            message: "",
+        });
+
+        // Optional: redirect after submit
+        // navigate("/");
+    };
+
+    return (
+        <main className="contact-page">
+            <section className="contact-hero">
+                <h1>Contact Us</h1>
+                <p>
+                    Have a question, catering request, or feedback? Send us a message.
+                </p>
+            </section>
+
+            <section className="contact-content">
+                <div className="contact-info">
+                    <h2>El Parrillaso</h2>
+                    <p>Authentic Mexican cuisine in Salinas, CA</p>
+                    <p><strong>Phone:</strong> (831) 000-0000</p>
+                    <p><strong>Email:</strong> contact@elparrillaso.com</p>
+                    <p><strong>Location:</strong> Salinas, CA</p>
+                </div>
+
+                <form className="contact-form" onSubmit={handleSubmit}>
+                    {submitted && (
+                        <p className="success-message">
+                            Thank you! Your message has been received.
+                        </p>
+                    )}
+
+                    <label>
+                        Name
+                        <input
+                            type="text"
+                            name="name"
+                            placeholder="Your Name"
+                            value={formData.name}
+                            onChange={handleChange}
+                            required
+                        />
+                    </label>
+
+                    <label>
+                        Email
+                        <input
+                            type="email"
+                            name="email"
+                            placeholder="Your Email"
+                            value={formData.email}
+                            onChange={handleChange}
+                            required
+                        />
+                    </label>
+
+                    <label>
+                        Message
+                        <textarea
+                            name="message"
+                            placeholder="Your Message"
+                            value={formData.message}
+                            onChange={handleChange}
+                            required
+                        />
+                    </label>
+
+                    <button type="submit">Send Message</button>
+                </form>
+            </section>
+        </main>
     );
-} 
+}
+
 export default Contact;

@@ -21,21 +21,16 @@ function SignUp() {
       navigate("/");
     }
 
-
-
-
   };
 
 
   
-  
-
   return (
     <div className="auth-container">
-      <h2>Login</h2>
+      <h2>SignUp</h2>
 
       {error && <p style={{ color: "red" }}>{error}</p>}
-
+    <div className="field">
       <form onSubmit={handleSignUp}>
         <input
           type="email"
@@ -52,9 +47,11 @@ function SignUp() {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
+      
 
         <button type="submit">SignUp</button>
       </form>
+      </div>
     </div>
   );
 }

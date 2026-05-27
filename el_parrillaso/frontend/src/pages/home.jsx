@@ -5,51 +5,112 @@ import menudo from "./images/menudo.JPG"
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel";
 
+
+const dishes = [
+  {
+    img: Asada_fries,
+    name: "Asada Fries",
+    description: "Crispy fries topped with grilled carne asada, guac & crema",
+    rating: 4.9,
+    reviews: 64,
+  },
+  {
+    img: menudo,
+    name: "Menudo",
+    description: "Traditional slow-cooked tripe soup with hominy & red chile",
+    rating: 4.7,
+    reviews: 38,
+  },
+  {
+    img: quese,
+    name: "Quesa Birria",
+    description: "Crispy quesatacos filled with braised birria & melted cheese",
+    rating: 4.9,
+    reviews: 91,
+  },
+];
+
+function StarRating({ rating}) {
+    return (
+        <span className="stars">
+            {"★".repeat(Math.round(rating))}{"☆".repeat(5 - Math.round(rating))}
+            <span className="rating-number"> {rating} </span>
+        </span>
+    );
+}
+
+
+
 function Home(){
     return (<div className="home">
     <section className="hero">
-        <h1> Authentic Mexican Flavor" </h1>
-            <h1> Fresh. Grilled. Delicious</h1>
-       <a href ="/reviews"> <button> Leave a Review</button></a>
-    </section>
-
-    <section className="featured">
-        <h2> Popular Dishes </h2>
-
-        <div className="dish-grid">
-            <Carousel 
-            autoPlay
-            infiniteLoop
-            showArrows={true}
-            showThumbs={false}
-            showStatus={false}
-            
-            >
-            <div className ="dish-card">
-                <img src= {Asada_fries} />
-                <h3> Asada Fries</h3>
-            </div>
-
-            <div className ="dish-card">
-                <img src={menudo} />
-                <h3> Menudo</h3>
-            </div>
-            <div className ="dish-card">
-                <img src={quese} />
-                <h3> Quese_birria</h3>
-            </div>
-            </Carousel>
-            
+        <div className="hero-content">
+          <h1>Authentic Mexican Flavor</h1>
+          <p className="hero-sub">Fresh. Grilled. Delicious.</p>
+          <div className="hero-actions">
+            <a href="/menu"><button className="btn-primary">View Menu</button></a>
+            <a href="/reviews"><button className="btn-secondary">Leave a Review</button></a>
+          </div>
         </div>
-        
-        
+      </section>
 
-    </section>
-    <section className ="footer"> 
-            <h1>Super duper </h1>
+    {/* Featured Dishes Carousel */}
+      <section className="featured">
+        <h2>Popular Dishes</h2>
+        <p className="section-sub">What our customers can't stop ordering</p>
 
-        </section>
+        <Carousel
+          autoPlay
+          infiniteLoop
+          showArrows={true}
+          showThumbs={false}
+          showStatus={false}
+          interval={3500}
+          transitionTime={500}
+        >
+          {dishes.map((dish) => (
+            <div className="dish-card" key={dish.name}>
+              <img src={dish.img} alt={dish.name} />
+              <div className="dish-info">
+                <h3>{dish.name}</h3>
+                <p className="dish-desc">{dish.description}</p>
+                <div className="dish-meta">
+                  <StarRating rating={dish.rating} />
+                  <span className="review-count">({dish.reviews} reviews)</span>
+                </div>
+                <a href={`/reviews?dish=${dish.name}`} className="dish-link">
+                  See reviews →
+                </a>
+              </div>
+            </div>
+          ))}
+        </Carousel>
+      </section>
+
+      {/* Review CTA */}
+      <section className="review-cta">
+        <h2>Tried something you loved?</h2>
+        <p>Help other guests discover their next favorite dish.</p>
+        <a href="/reviews"><button className="btn-primary">Write a Review</button></a>
+      </section>
+
+      {/* Footer */}
+      <footer className="footer">
+        <div className="footer-inner">
+          <div className="footer-brand">
+            <h3>El Parrillaso</h3>
+            <p>Authentic Mexican cuisine in Salinas, CA</p>
+          </div>
+          <div className="footer-links">
+            <a href="/menu">Menu</a>
+            <a href="/reviews">Reviews</a>
+            <a href="/about">About</a>
+          </div>
+          <p className="footer-copy">© 2026 El Parrillaso All rights reserved.</p>
+        </div>
+      </footer>
     </div>
-);
+  );
 }
+
 export default Home;
