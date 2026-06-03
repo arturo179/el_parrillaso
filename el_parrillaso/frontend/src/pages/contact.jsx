@@ -33,8 +33,7 @@ function Contact() {
             message: "",
         });
 
-        // Optional: redirect after submit
-        // navigate("/");
+        navigate("/");
     };
 
     return (
@@ -50,8 +49,8 @@ function Contact() {
                 <div className="contact-info">
                     <h2>El Parrillaso</h2>
                     <p>Authentic Mexican cuisine in Salinas, CA</p>
-                    <p><strong>Phone:</strong> (831) 000-0000</p>
-                    <p><strong>Email:</strong> contact@elparrillaso.com</p>
+                    <p><strong>Phone:</strong> (831) 272-3317</p>
+                    <p><strong>Email:</strong> elparrillaso@gmail.com</p>
                     <p><strong>Location:</strong> Salinas, CA</p>
                 </div>
 

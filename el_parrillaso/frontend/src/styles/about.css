@@ -4,10 +4,27 @@
     padding: 0;
     box-sizing: border-box;
 }
+.about-info{
+    display: flex;
+    height: auto;
+
+    text-size-adjust: calc();
+
+}
 
 .top-section {
-    width: auto;
-    height: 425px;
+    width: 250px;
+    padding: 70px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+    background: white;
+    margin-right: auto;
+    text-align: center;
+}
+.middle-section{
+    width: 250px;
     padding: 70px;
     border-radius: 10px;
     overflow: hidden;
@@ -16,6 +33,18 @@
     background: white;
     margin-left: auto;
     margin-right: auto;
+    text-align: center;
+    
+}
+.right-section{
+    width: 250px;
+    padding: 70px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+    background: white;
+    margin-left: auto;
     text-align: center;
 }
 .footer-section {

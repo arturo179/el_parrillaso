@@ -1,6 +1,14 @@
 import { useEffect,useState } from "react";
 import { supabase } from "../services/supabaseClient"
 
+import { Navigate, NavLink, useNavigate } from "react-router-dom";
+
+function handle_reciew(){
+    Navigate("/reviews");
+
+
+}
+
 
 function Reviews() {
     const [reviewText, setReviewText] = useState("");
@@ -32,6 +40,8 @@ function Reviews() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        const API_URL = import.meta.env.VITE_API_URL;
+
 
         try {
             const {data: { session} } = await supabase.auth.getSession();
@@ -159,7 +169,7 @@ function Reviews() {
 
         <div className="review-list">
             {reviews.map((r, index) => { 
-                console.log("review dta:", r.image_url);
+                console.log("review data:", r.image_url);
                 return (
                 <div key={r.id} className="review-card">
 
