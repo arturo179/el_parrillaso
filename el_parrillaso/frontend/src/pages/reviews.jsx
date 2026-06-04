@@ -3,6 +3,7 @@ import { supabase } from "../services/supabaseClient"
 
 import { Navigate, NavLink, useNavigate } from "react-router-dom";
 
+
 function handle_reciew(){
     Navigate("/reviews");
 
@@ -17,6 +18,7 @@ function Reviews() {
     const[preview, setPreview] = useState(null);
     const [reviews, setReviews] = useState([]);
     const[imageUrl, setImageUrl] = useState("");
+    const [formError, setFormError] = useState("");
     
 
     useEffect(() => {
@@ -40,11 +42,34 @@ function Reviews() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const API_URL = import.meta.env.VITE_API_URL;
+        setFormError("");
+        const {data: { session} } = await supabase.auth.getSession();
 
+
+        if (!session) {
+            setFormError("You must log in or create an account to submit a review.");
+            return;
+        }
+
+        if(!reviewText.trim() && rating === 0){
+            setFormError("Please add a rating and write a reivew before Submitting")
+            return;
+        }
+        if(!rating==0){
+            setFormError("Please have all fienlds filled")
+            return;
+        }
+        if(!reviewText.trim()){
+            setFormError("Please write something before Submitting");
+            return;
+        }
+         const API_URL = import.meta.env.VITE_API_URL;
 
         try {
-            const {data: { session} } = await supabase.auth.getSession();
+
+            
+
+        
 
             let uploadedUrl = null;
             if(image){
@@ -159,7 +184,9 @@ function Reviews() {
                     {preview && (
 
                         <img src={preview} className="preview-image" />
+
                     )}
+                    {formError && <p className="form-error">{formError}</p>}
 
                     <button type="submit">Submit Review</button>
                 </span>

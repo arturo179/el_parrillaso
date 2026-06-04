@@ -4,6 +4,7 @@ import quese from "./images/quese_birria.JPG"
 import menudo from "./images/menudo.JPG"
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel";
+import { Navigate, useNavigate } from "react-router-dom";
 
 
 const dishes = [
@@ -42,6 +43,7 @@ function StarRating({ rating}) {
 
 
 function Home(){
+  const navigate = useNavigate();
     return (<div className="home">
     <section className="hero">
         <div className="hero-content">
@@ -78,9 +80,9 @@ function Home(){
                   <StarRating rating={dish.rating} />
                   <span className="review-count">({dish.reviews} reviews)</span>
                 </div>
-                <a href={`/reviews?dish=${dish.name}`} className="dish-link">
+                <button onClick={() => navigate("/reviews")}>
                   See reviews →
-                </a>
+                </button>
               </div>
             </div>
           ))}
@@ -91,7 +93,7 @@ function Home(){
       <section className="review-cta">
         <h2>Tried something you loved?</h2>
         <p>Help other guests discover their next favorite dish.</p>
-        <a href="/reviews"><button className="btn-primary">Write a Review</button></a>
+        <button className="btn-primary" onClick={() => navigate("/reviews")}>Write a Review</button>
       </section>
 
       {/* Footer */}
